@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Velvet Cafe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      color: white;
+      background-color: #111;
+    }
+
+    header {
+      background-image: url('https://images.unsplash.com/photo-1559925393-8be0ec4767c8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YWVzdGhldGljJTIwY2FmZXxlbnwwfHwwfHx8MA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: flex-start; /* Align items to the left */
+      align-items: center;
+      gap: 40px;
+      padding: 30px 20px;
+      background: rgba(0, 0, 0, 0.8);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative;
+      padding: 5px 0;
+      font-weight: normal;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffcc70;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      background: #ffcc70;
+      bottom: 0;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .brand-logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      color: #ffcc70;
+      font-style: italic;
+      letter-spacing: 2px;
+      margin-right: 40px;
+      margin-left: 10px;
+      text-shadow: 1px 2px 8px #00000070;
+      display: flex;
+      align-items: center;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        gap: 15px;
+        padding: 15px;
+      }
+      
+      .brand-logo {
+        font-size: 1.3rem;
+        margin-right: 15px;
+        margin-left: 5px;
+      }
+    }
+
+    .hero h1 {
+      font-size: 72px;
+      margin-bottom: 20px;
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 8px #000;
+      font-weight: 300;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .hero a.button {
+      padding: 18px 36px;
+      font-size: 16px;
+      background-color: #ffcc70;
+      color: black;
+      border: none;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: fadeInUp 1s ease 0.5s both;
+    }
+
+    .hero a.button:hover {
+      background-color: #ffc14d;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Sections */
+    .section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 42px;
+      margin-bottom: 50px;
+      text-align: center;
+      font-weight: 300;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: #ffcc70;
+      margin: 20px auto;
+    }
+
+    h3 {
+      color: #ffcc70;
+      text-align: center;
+      margin: 60px 0 30px;
+      font-size: 28px;
+      position: relative;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    h3::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: rgba(255, 204, 112, 0.5);
+      margin: 15px auto;
+    }
+
+    /* Menu Items */
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .menu-item {
+      background: #1a1a1a;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.4s ease;
+      overflow: hidden;
+      border: 1px solid rgba(255, 204, 112, 0.1);
+    }
+
+    .menu-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+      border-color: rgba(255, 204, 112, 0.3);
+    }
+
+    .menu-item-img-container {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .menu-item-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .menu-item:hover .menu-item-img {
+      transform: scale(1.1);
+    }
+
+    .menu-item h4 {
+      margin-bottom: 12px;
+      color: #ffcc70;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    .menu-item p {
+      margin-bottom: 15px;
+      font-size: 15px;
+      color: #aaa;
+      line-height: 1.5;
+    }
+
+    .price {
+      font-weight: bold;
+      color: white;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    .gallery-item {
+      height: 300px;
+      overflow: hidden;
+      border-radius: 8px;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-text {
+      padding-right: 30px;
+    }
+
+    .about-text p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .about-image {
+      border-radius: 12px;
+      overflow: hidden;
+      height: 500px;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Reservation Form */
+    .reservation-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 500px;
+      margin: 50px auto 0;
+      background: #1a1a1a;
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 204, 112, 0.1);
+    }
+
+    .reservation-form input,
+    .reservation-form select,
+    .reservation-form textarea {
+      padding: 15px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      background: #222;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .reservation-form input:focus,
+    .reservation-form select:focus,
+    .reservation-form textarea:focus {
+      background: #2a2a2a;
+      box-shadow: 0 0 0 2px #ffcc70;
+    }
+
+    .reservation-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .reservation-form button {
+      background-color: #ffcc70;
+      padding: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+
+    .reservation-form button:hover {
+      background-color: #ffc14d;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Social Icons */
+    .social-icons {
+      bottom: 30px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .social-icons a {
+      margin: 0 15px;
+      color: white;
+      font-size: 22px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .social-icons a:hover {
+      color: #ffcc70;
+      transform: translateY(-5px);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      nav {
+        gap: 25px;
+        padding: 20px;
+      }
+      
+      .hero h1 {
+        font-size: 60px;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .about-text {
+        padding-right: 0;
+      }
+
+      .about-image {
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero a.button {
+        padding: 15px 30px;
+      }
+      
+      .section {
+        padding: 80px 20px;
+      }
+      
+      .section-title {
+        font-size: 36px;
+      }
+      
+      h3 {
+        font-size: 24px;
+      }
+      
+      .menu-items,
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+      
+      .section-title {
+        font-size: 32px;
+      }
+      
+      .reservation-form {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <span class="brand-logo">The Velvet Cafe</span>
+    <a href="#">Home</a>
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reservation">Reservation</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1 style="color:#000000; text-shadow: 2px 2px 16px #010101, 0 0 10px #f7f7f7;">The Velvet Cafe</h1>
+    <a href="#reservation" class="button">Book a Table</a>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <h2 class="section-title">Our Story</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <p>Nestled in the heart of the city, The Velvet Cafe is a culinary sanctuary where passion meets perfection. Founded in 2015 by master chef Rajiv Malhotra, our restaurant has become synonymous with exquisite flavors and unforgettable dining experiences.</p>
+        
+        <p>Our philosophy is simple: to create dishes that tell a story. Each recipe is crafted with generations of culinary wisdom, using only the finest locally-sourced ingredients. From the aromatic spices in our biryanis to the fresh herbs in our mocktails, every element is carefully selected to delight your senses.</p>
+        
+              </div>
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Velvet Cafe Interior">
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="section">
+    <h2 class="section-title">Our Menu</h2>
+
+    <!-- Vegetarian Delights -->
+<h3>🍃 Vegetarian Delights</h3>
+<div class="menu-items">
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://cookingitalians.com/wp-content/uploads/2024/11/Margherita-Pizza.jpg" alt="Margherita Pizza" class="menu-item-img">
+    </div>
+    <h4>Margherita Pizza</h4>
+    <p>Authentic Neapolitan-style pizza with San Marzano tomato sauce, fresh mozzarella di bufala, and basil leaves baked in our wood-fired oven</p>
+    <p class="price">₹349</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://cdn.uengage.io/uploads/28289/image-YFKD6T-1722335450.jpg" alt="Paneer Tikka" class="menu-item-img">
+    </div>
+    <h4>Paneer Tikka</h4>
+    <p>Succulent cubes of homemade paneer marinated in yogurt and spices, grilled to perfection in our tandoor with bell peppers and onions</p>
+    <p class="price">₹299</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuBqN93WsHmDe0AsjSio-1AaQcPeb2G3yyOQ&s" alt="Veg Biryani" class="menu-item-img">
+    </div>
+    <h4>Veg Biryani</h4>
+    <p>Fragrant basmati rice layered with seasonal vegetables, caramelized onions, and aromatic spices, cooked in the traditional dum style</p>
+    <p class="price">₹249</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://mcdonaldsblog.in/wp-content/uploads/2016/06/mcspicy-paneer-1-1.jpg" alt="Paneer Burger" class="menu-item-img">
+    </div>
+    <h4>Paneer Burger</h4>
+    <p>Grilled paneer patty with lettuce, tomato, and house sauce in a toasted bun, served with fries</p>
+    <p class="price">₹229</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://th.bing.com/th/id/R.3ca86d2d5e3a0e4645128c54b4bbed2b?rik=lpFI9h64nT%2bDjQ&riu=http%3a%2f%2fwww.maatamanti.com%2fwp-content%2fuploads%2f2017%2f10%2fVeg-Manchurian2.jpg&ehk=KtonpDL9msc94fHJFcmzBfrYHqPLc6qag7ulbgCpwBk%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" alt="Veg Manchurian" class="menu-item-img">
+    </div>
+    <h4>Veg Manchurian</h4>
+    <p>Crispy vegetable balls tossed in a tangy Indo-Chinese sauce, garnished with spring onions</p>
+    <p class="price">₹199</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://media.vogue.in/wp-content/uploads/2020/08/chole-bhature-recipe.jpg" alt="Chole Bhature" class="menu-item-img">
+    </div>
+    <h4>Chole Bhature</h4>
+    <p>Fluffy deep-fried bhature served with spicy and tangy chickpea curry, garnished with onions and lemon</p>
+    <p class="price">₹189</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.ihKZv7QHjKFVbbqQWnPY7wHaLO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Veg Hakka Noodles" class="menu-item-img">
+    </div>
+    <h4>Veg Hakka Noodles</h4>
+    <p>Stir-fried noodles tossed with mixed vegetables and soy sauce in Indo-Chinese style</p>
+    <p class="price">₹179</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://recipes.timesofindia.com/photo/52416693.cms?imgsize=53280" alt="Pav Bhaji" class="menu-item-img">
+    </div>
+    <h4>Pav Bhaji</h4>
+    <p>Spicy mashed vegetable curry served with butter-toasted pav buns, onions, and lemon</p>
+    <p class="price">₹159</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.1U7rm_HfMhxR1cYmY4-uZAHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Dal Makhani" class="menu-item-img">
+    </div>
+    <h4>Dal Makhani</h4>
+    <p>Creamy black lentils slow-cooked with butter, cream, and aromatic spices, served with naan</p>
+    <p class="price">₹189</p>
+  </div>
+</div>
+
+<h3>🍗 Non-Vegetarian Specials</h3>
+<div class="menu-items">
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCejJG8uGK5kCRUQUlRptPivNJj8kSoWtjgg&s" alt="Grilled Chicken" class="menu-item-img">
+    </div>
+    <h4>Grilled Chicken</h4>
+    <p>Free-range chicken breast marinated in rosemary, garlic and lemon, served with roasted vegetables and our signature thyme jus</p>
+    <p class="price">₹449</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://images.immediate.co.uk/production/volatile/sites/30/2021/02/butter-chicken-ac2ff98.jpg" alt="Butter Chicken" class="menu-item-img">
+    </div>
+    <h4>Butter Chicken</h4>
+    <p>Our legendary dish - tender chicken pieces in a creamy tomato gravy with a touch of fenugreek, served with garlic naan</p>
+    <p class="price">₹399</p>
+  </div>
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://vaya.in/recipes/wp-content/uploads/2018/06/Popcorn-Crusted-Fish-Fingers.jpg" alt="Fish Fingers" class="menu-item-img">
+    </div>
+    <h4>Fish Fingers</h4>
+    <p>Crispy beer-battered cod fingers served with homemade tartar sauce, lemon wedges, and a side of fries</p>
+    <p class="price">₹329</p>
+  </div>
+  <!-- New Non-Veg Items with images -->
+  <div class="menu-item">
+    <div class="menu-item-img-container">
+      <img src="https://glebekitchen.com/wp-content/uploads/2016/11/tandoorimarinadechickentikkaclosecrop-1.jpg" alt="Chicken Tikka" class="menu-item-img">
+    </div>
+    <h4>Chicken Tikka</h4>
+    <p>Juicy chicken chunks marinated in yogurt and spices, grilled to perfection in our clay oven</p>
+    <p class="price">₹359</p>
+  </div>
+  <div class="menu-item">
+  <div class="menu-item-img-container">
+    <img src="https://1.bp.blogspot.com/-S_1HJb6StqY/X9WeCN8qLTI/AAAAAAAACjc/0VBiiWhlIlk5tsXxM6EsmMojTmM0UzAUQCLcBGAsYHQ/w640-h624/Rogan-Josh-2-PictureTheRecipe.jpg" alt="Mutton Rogan Josh" class="menu-item-img">
+  </div>
+  <h4>Mutton Rogan Josh</h4>
+  <p>Slow-cooked mutton in a rich Kashmiri gravy with fennel, cardamom, and yogurt, served with saffron rice</p>
+  <p class="price">₹479</p>
+</div>
+
+<div class="menu-item">
+  <div class="menu-item-img-container">
+    <img src="https://www.licious.in/blog/wp-content/uploads/2020/12/Chilli-Prawns.jpg" alt="Spicy Prawn Fry" class="menu-item-img">
+  </div>
+  <h4>Spicy Prawn Fry</h4>
+  <p>Juicy prawns stir-fried with garlic, curry leaves, and house spices for a fiery coastal experience</p>
+  <p class="price">₹389</p>
+</div>
+
+      
+    </div>
+
+    <h3>⭐ Chef's Specials</h3>
+    <div class="menu-items">
+      <div class="menu-item">
+        <div class="menu-item-img-container">
+          <img src="https://media.assettype.com/indulgexpress%2F2025-05-14%2Fcklie5vp%2F20250508_140936.jpg?w=640&auto=format%2Ccompress" alt="Velvet Cafe Sizzler" class="menu-item-img">
+        </div>
+        <h4>Velvet Cafe Sizzler</h4>
+        <p>Our signature sizzler with grilled prawns, chicken, and vegetables served on a 300°C iron plate with three signature sauces</p>
+        <p class="price">₹499</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img-container">
+          <img src="https://ik.imagekit.io/ap2/recipes/mango-mint-spritz_TITAN.png?tr=w-3840" alt="Mango Mint Mocktail" class="menu-item-img">
+        </div>
+        <h4>Mango Mint Mocktail</h4>
+        <p>Fresh Alphonso mango puree blended with mint leaves, lime juice, and soda, garnished with a sprig of fresh mint</p>
+        <p class="price">₹149</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-img-container">
+          <img src="https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Red Velvet Cake" class="menu-item-img">
+        </div>
+        <h4>Red Velvet Cake</h4>
+        <p>Our namesake dessert - moist red velvet layers with cream cheese frosting and edible gold leaf garnish</p>
+        <p class="price">₹199</p>
+      </div>
+      <!-- New Chef's Specials with images -->
+      <div class="menu-item">
+        <div class="menu-item-img-container">
+          <img src="https://tse3.mm.bing.net/th/id/OIP.xHrR4gCAYvffmpab3zsxqgAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Chocolate Lava Cake" class="menu-item-img">
+        </div>
+        <h4>Chocolate Lava Cake</h4>
+        <p>Warm chocolate cake with a gooey molten center, served with vanilla ice cream</p>
+        <p class="price">₹179</p>
+      </div>
+      <div class="menu-item">
+  <div class="menu-item-img-container">
+    <img src="https://i.ytimg.com/vi/Sehr3grslF0/maxresdefault.jpg" alt="Mango Cheesecake" class="menu-item-img">
+  </div>
+  <h4>Mango Cheesecake</h4>
+  <p>Creamy no-bake cheesecake with fresh mango puree on a buttery biscuit crust</p>
+  <p class="price">₹199</p>
+</div>
+
+<div class="menu-item">
+  <div class="menu-item-img-container">
+    <img src="https://i.pinimg.com/originals/07/f0/41/07f041d41979599297efd5886182961e.jpg" alt="Mocha Frappe" class="menu-item-img">
+  </div>
+  <h4>Mocha Frappe</h4>
+  <p>Chilled chocolate-coffee blended drink topped with whipped cream and cocoa dust</p>
+  <p class="price">₹169</p>
+</div>
+
+  
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="section" style="background: #0f0f0f;">
+    <h2 class="section-title">Gallery</h2>
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Restaurant Interior">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Chef Preparing Food">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Avocado Toast">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Dining Area">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Dessert">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.1.0&auto=format&fit=crop&w=1000&q=80" alt="Cocktails">
+      </div>
+    </div>
+  </section>
+
+  <!-- Reservation Section -->
+  <section id="reservation" class="section">
+    <h2 class="section-title">Reserve a Table</h2>
+    <form class="reservation-form">
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="tel" placeholder="Phone Number" required />
+      <input type="date" required />
+      <input type="time" required />
+      <select required>
+        <option value="">Number of Guests</option>
+        <option value="1">1 Person</option>
+        <option value="2">2 People</option>
+        <option value="3">3 People</option>
+        <option value="4">4 People</option>
+        <option value="5+">5+ People</option>
+      </select>
+      <textarea placeholder="Special Requests (Optional)"></textarea>
+      <button type="submit">Confirm Booking</button>
+    </form>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section" style="background: #0f0f0f;">
+    <h2 class="section-title">Contact Us</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto;">
+      <div>
+        <h3 style="text-align: left; margin: 0 0 20px;">Location</h3>
+        <p style="color: #ccc; line-height: 1.8;">
+          123 Gourmet Street<br>
+          Foodie District<br>
+          Mumbai 400001<br>
+          India
+        </p>
+      </div>
+      <div>
+        <h3 style="text-align: left; margin: 0 0 20px;">Hours</h3>
+        <p style="color: #ccc; line-height: 1.8;">
+          Monday - Friday: 11am - 11pm<br>
+          Saturday - Sunday: 10am - 12am<br>
+          <br>
+          Happy Hour: 4pm - 7pm daily
+        </p>
+      </div>
+      <div>
+        <h3 style="text-align: left; margin: 0 0 20px;">Contact</h3>
+        <p style="color: #ccc; line-height: 1.8;">
+          Phone: +91 1234567890<br>
+          Email: info@velvetcafe.com<br>
+          <br>
+          For private events, please contact:<br>
+          events@velvetcafe.com
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Media Icons -->
+  <div class="social-icons">
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-tripadvisor"></i></a>
+  </div>
+</body>
+</html>
